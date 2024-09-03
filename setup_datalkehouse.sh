@@ -175,7 +175,7 @@ case $PLATFORM in
     fi
 
     print_status "${YELLOW}" "Starting Minikube with high availability..."
-    minikube start --ha --driver=docker --container-runtime=containerd --memory=8192 --cpus=4
+    minikube start --ha --driver=docker --container-runtime=containerd
     
     if [ $? -ne 0 ]; then
       print_status "${RED}" "❌ Failed to start Minikube."
