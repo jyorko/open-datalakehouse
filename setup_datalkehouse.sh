@@ -124,13 +124,13 @@ display_summary() {
   print_status "${GREEN}" "\n📊 Data Lakehouse Deployment Summary:"
   echo "----------------------------------------"
   
-  local resources=$(kubectl get all -n datalake -o json)
+  local resources=$(kubectl get all -n data-lakehouse -o json)
   local total_resources=$(echo "$resources" | jq '.items | length')
   
   if [ "$total_resources" -eq 0 ]; then
-    print_status "${YELLOW}" "⏳ No resources found in the datalake namespace. Waiting for resources to be created..."
+    print_status "${YELLOW}" "⏳ No resources found in the data-lakehouse namespace. Waiting for resources to be created..."
   else
-    kubectl rollout status deployment -n datalake
+    kubectl rollout status deployment -n data-lakehouse
   fi
   
   echo "----------------------------------------"
@@ -226,7 +226,7 @@ check_pods_ready "argocd"
 
 # Deploy the ArgoCD application of applications
 print_status "${YELLOW}" "⏳ Deploying the ArgoCD application of applications..."
-kubectl apply -n argocd -f https://raw.githubusercontent.com/jyorko/open-datalakehouse/main/app-of-apps.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/jyorko/open-data-lakehousehouse/main/app-of-apps.yaml
 
 # Monitor the deployment
 print_status "${YELLOW}" "⏳ Monitoring the deployment..."

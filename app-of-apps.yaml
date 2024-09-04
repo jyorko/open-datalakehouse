@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: open-datalakehouse
+  name: open-data-lakehousehouse
   namespace: argocd
 spec:
   project: default

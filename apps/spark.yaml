@@ -10,7 +10,7 @@ spec:
     path: application-charts/spark
   destination:
     server: https://kubernetes.default.svc
-    namespace: datalake
+    namespace: data-lakehouse
   syncPolicy:
     automated:
       prune: true

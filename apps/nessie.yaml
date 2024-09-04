@@ -11,10 +11,10 @@ spec:
     targetRevision: 0.1.26  # Adjust version as needed
     helm:
       valueFiles:
-        - https://raw.githubusercontent.com/jyorko/open-datalakehouse/main/application-charts/nessie/nessie-values.yaml
+        - https://raw.githubusercontent.com/jyorko/open-data-lakehousehouse/main/application-charts/nessie/nessie-values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: datalake
+    namespace: data-lakehouse
   syncPolicy:
     automated:
       prune: true

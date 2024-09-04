@@ -1,8 +1,8 @@
-name: datalake
-description: A generated Helm Chart for datalakehouse
+name: data-lakehouse
+description: A generated Helm Chart for data-lakehousehouse
 version: 0.0.1
 apiVersion: v2
 keywords:
-  - datalakehouse
+  - data-lakehousehouse
 sources:
 home:

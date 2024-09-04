@@ -3,7 +3,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: dremio-executor-default
-  namespace: datalake
+  namespace: data-lakehouse
   labels:
     app.kubernetes.io/name: dremio
     app.kubernetes.io/instance: dremio
