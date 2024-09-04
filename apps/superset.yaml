@@ -14,7 +14,7 @@ spec:
         - https://raw.githubusercontent.com/jyorko/open-datalakehouse/main/application-charts/superset/superset-values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: data-lakehouse
+    namespace: datalake
   syncPolicy:
     automated:
       prune: true

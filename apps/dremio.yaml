@@ -15,7 +15,7 @@ spec:
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: data-lakehouse
+    namespace: datalake
   syncPolicy:
     automated:
       prune: true
