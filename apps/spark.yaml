@@ -5,7 +5,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/joshyorko/open-datalakehouse.git
+    repoURL: https://github.com/jyorko/open-datalakehouse.git
     targetRevision: HEAD
     path: application-charts/spark
   destination:

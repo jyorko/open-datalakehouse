@@ -3,7 +3,7 @@ postgresql:
   postgresqlPassword: superset
   persistence:
     enabled: true
-    storageClass: "longhorn"
+    storageClass: "gp2-expandable"
     accessModes:
       - ReadWriteOnce
     size: 8Gi
@@ -13,7 +13,7 @@ redis:
   master:
     persistence:
       enabled: true
-      storageClass: "longhorn"
+      storageClass: "gp2-expandable"
       accessModes:
         - ReadWriteOnce
       size: 8Gi
@@ -68,7 +68,7 @@ init:
   loadExamples: false
   createAdmin: true
   adminUser:
-    username: joshyorko
+    username: jyorko
     firstname: Superset
     lastname: Admin
     email: email@example.com
