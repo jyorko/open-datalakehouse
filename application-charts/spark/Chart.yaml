@@ -1,4 +1,4 @@
-name: data-lakehouse
+name: datalake
 description: A generated Helm Chart for datalakehouse
 version: 0.0.1
 apiVersion: v2

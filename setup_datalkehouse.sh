@@ -124,13 +124,13 @@ display_summary() {
   print_status "${GREEN}" "\n📊 Data Lakehouse Deployment Summary:"
   echo "----------------------------------------"
   
-  local resources=$(kubectl get all -n data-lakehouse -o json)
+  local resources=$(kubectl get all -n datalake -o json)
   local total_resources=$(echo "$resources" | jq '.items | length')
   
   if [ "$total_resources" -eq 0 ]; then
-    print_status "${YELLOW}" "⏳ No resources found in the data-lakehouse namespace. Waiting for resources to be created..."
+    print_status "${YELLOW}" "⏳ No resources found in the datalake namespace. Waiting for resources to be created..."
   else
-    kubectl rollout status deployment -n data-lakehouse
+    kubectl rollout status deployment -n datalake
   fi
   
   echo "----------------------------------------"

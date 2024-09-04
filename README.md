@@ -168,12 +168,12 @@ This will start a Jupyter Lab instance with PySpark and all required dependencie
 
 2. View logs for a specific pod:
    ```bash
-   kubectl logs -n data-lakehouse <pod-name>
+   kubectl logs -n datalake <pod-name>
    ```
 
 3. Describe a pod for more details:
    ```bash
-   kubectl describe pod -n data-lakehouse <pod-name>
+   kubectl describe pod -n datalake <pod-name>
    ```
 
 ## Conclusion
