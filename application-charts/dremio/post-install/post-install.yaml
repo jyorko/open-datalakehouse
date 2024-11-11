@@ -101,37 +101,55 @@ spec:
                   "name": "mbeltran",
                   "firstName": "Marcos",
                   "lastName": "Yepes-Beltran",
-                  "email": "marcos.yepesbeltran@gainwelltechnologies.com"
+                  "email": "marcos.yepesbeltran@gainwelltechnologies.com",
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "jcav",
                   "firstName": "Justin",
                   "lastName": "Cavanaugh",
-                  "email": "justin.cavanaugh@gainwelltechnologies.com"
+                  "email": "justin.cavanaugh@gainwelltechnologies.com",
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "jsanders",
                   "firstName": "Jennifer",
                   "lastName": "Sanders",
-                  "email": "jennifer.sanders@gainwelltechnologies.com"
+                  "email": "jennifer.sanders@gainwelltechnologies.com",
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "kmelton",
                   "firstName": "Kaelyn",
                   "lastName": "Melton",
-                  "email": "kaelyn.dobbins@gainwelltechnologies.com"
+                  "email": "kaelyn.dobbins@gainwelltechnologies.com",
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "tgriggs",
                   "firstName": "Tyler",
                   "lastName": "Griggs",
-                  "email": "tyler.griggs@gainwelltechnologies.com"
+                  "email": "tyler.griggs@gainwelltechnologies.com",
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "jyorko",
                   "firstName": "Josh",
                   "lastName": "Yorko",
-                  "email": "joshua.yorko@gainwelltechnologies.com"
+                  "email": "joshua.yorko@gainwelltechnologies.com",
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 }
               ]' && \
               
