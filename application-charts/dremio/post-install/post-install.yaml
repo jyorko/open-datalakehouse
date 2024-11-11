@@ -1,4 +1,3 @@
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -24,17 +23,18 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              apk add --no-cache curl sed && \
+              apk add --no-cache curl sed jq && \
               sleep 60s && \
+              # Authenticate as admin
               response=$(curl -s -X POST "http://dremio:9047/apiv2/login" \
                 --header "Content-Type: application/json" \
                 --data-raw "{
-                \"userName\": \"admin\",
-                \"password\": \"Pa22word\"
+                  \"userName\": \"admin\",
+                  \"password\": \"Pa22word\"
                 }") && \
-              echo $response && \
               token=$(echo "$response" | sed -n 's/.*\"token\":\"\([^\"]*\)\".*/\1/p') && \
-              echo $token && \
+              echo "Admin token: $token" && \
+              
               # Add Nessie catalog source
               response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
                 --header "Authorization: Bearer $token" \
@@ -61,7 +61,8 @@ spec:
                     \"name\": \"nessie-1\",
                     \"type\": \"NESSIE\"
                 }") && \
-              echo $response && \
+              echo "Nessie Source Response: $response" && \
+
               # Add S3-compatible storage source (MinIO)
               response=$(curl -X POST "http://dremio:9047/api/v3/source" \
                 --header "Authorization: Bearer $token" \
@@ -82,16 +83,75 @@ spec:
                         ]
                     }
                 }") && \
-              echo $response && \
-              # Create Bronze, Silver, and Gold spaces
-              for space in "Power BI"; do \
-                response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
+              echo "MinIO Source Response: $response" && \
+
+              # Create Power BI space
+              response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
                   --header "Authorization: Bearer $token" \
                   --header "Content-Type: application/json" \
                   --data-raw "{
                       \"entityType\": \"space\",
-                      \"name\": \"$space\"
+                      \"name\": \"Power BI\"
                   }") && \
-                echo $response; \
+              echo "Power BI Space Response: $response" && \
+
+              # Define users to be created
+              users='[
+                {
+                  "name": "mbeltran",
+                  "firstName": "Marcos",
+                  "lastName": "Yepes-Beltran",
+                  "email": "marcos.yepesbeltran@gainwelltechnologies.com",
+                  "password": "~\\-w0+719C0do"
+                },
+                {
+                  "name": "jcav",
+                  "firstName": "Justin",
+                  "lastName": "Cavanaugh",
+                  "email": "justin.cavanaugh@gainwelltechnologies.com",
+                  "password": "marcos_lovesM7!!"
+                },
+                {
+                  "name": "jsanders",
+                  "firstName": "Jennifer",
+                  "lastName": "Sanders",
+                  "email": "jennifer.sanders@gainwelltechnologies.com",
+                  "password": "Pa22word22!"
+                },
+                {
+                  "name": "kmelton",
+                  "firstName": "Kaelyn",
+                  "lastName": "Melton",
+                  "email": "kaelyn.dobbins@gainwelltechnologies.com",
+                  "password": "Pa22word"
+                },
+                {
+                  "name": "tgriggs",
+                  "firstName": "Tyler",
+                  "lastName": "Griggs",
+                  "email": "tyler.griggs@gainwelltechnologies.com",
+                  "password": "Pa22word22!"
+                },
+                {
+                  "name": "jyorko",
+                  "firstName": "Josh",
+                  "lastName": "Yorko",
+                  "email": "joshua.yorko@gainwelltechnologies.com",
+                  "password": "Pa22word22!"
+                }
+              ]' && \
+              
+              # Loop to create each user
+              echo "$users" | jq -c '.[]' | while read user; do
+                response=$(curl -s -X POST "http://dremio:9047/api/v3/user" \
+                  --header "Authorization: Bearer $token" \
+                  --header "Content-Type: application/json" \
+                  --data-raw "$user") && \
+                if echo "$response" | grep -q '"errorMessage"'; then
+                  echo "Failed to create user: $(echo "$user" | jq -r '.name')";
+                  echo "Error: $(echo "$response" | jq -r '.errorMessage')";
+                else
+                  echo "Successfully created user: $(echo "$user" | jq -r '.name')";
+                fi;
               done
       restartPolicy: OnFailure
