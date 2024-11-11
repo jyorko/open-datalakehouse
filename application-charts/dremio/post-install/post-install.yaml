@@ -42,7 +42,7 @@ spec:
                 --data-raw "{
                     \"entityType\": \"source\",
                     \"config\": {
-                        \"nessieEndpoint\": \"http://nessie:19120/api/v2\",
+                        \"nessieEndpoint\": \"http://nessie-1:19120/api/v2\",
                         \"nessieAuthType\": \"NONE\",
                         \"asyncEnabled\": true,
                         \"isCachingEnabled\": true,
@@ -58,7 +58,7 @@ spec:
                         ],
                         \"secure\": false
                     },
-                    \"name\": \"nessie\",
+                    \"name\": \"nessie-1\",
                     \"type\": \"NESSIE\"
                 }") && \
               echo $response && \
@@ -68,7 +68,7 @@ spec:
                 --header "Content-Type: application/json" \
                 --data-raw "{
                     \"entityType\": \"source\",
-                    \"name\": \"upload-bucket\",
+                    \"name\": \"upload\",
                     \"type\": \"S3\",
                     \"config\": {
                         \"accessKey\": \"minio-admin\",

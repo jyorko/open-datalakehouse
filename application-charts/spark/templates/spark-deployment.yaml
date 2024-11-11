@@ -35,6 +35,16 @@ spec:
           volumeMounts:
             - mountPath: /home/docker/work
               name: notebook-data
+
+          # Resource requests and limits
+          resources:
+            requests:
+              memory: "8Gi"      # Request 8GB of memory
+              cpu: "4"           # Request 4 CPU cores
+            limits:
+              memory: "16Gi"     # Limit to 16GB of memory
+              cpu: "8"           # Limit to 8 CPU cores
+
       volumes:
         - name: notebook-data
           persistentVolumeClaim:

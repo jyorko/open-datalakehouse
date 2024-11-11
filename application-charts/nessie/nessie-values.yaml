@@ -1,15 +1,62 @@
 # Configuration values for the Nessie application Helm chart
 global:
-  imageRegistry: ""
-  ## E.g.
-  ## imagePullSecrets:
-  ##   - myRegistryKeySecretName
-  ##
-  imagePullSecrets: []
 
   storageClass: "gp2-expandable"
 
-replicaCount: 1
-# Specify any additional configuration values for the Nessie application
-# For example:
-# configKey: configValue
+replicaCount: 3
+
+service:
+  server:
+    ## Change service type from LoadBalancer to ClusterIP
+    ##
+    type: LoadBalancer
+    ## The HTTP port remains the same
+    ##
+    ports:
+      http: 19120
+    ## No need for nodePorts when using ClusterIP
+    ##
+    nodePorts:
+      http: ""
+    ## Optionally specify the Cluster IP, or leave it empty for dynamic assignment
+    ##
+    LoadBalancer: ""
+    ## LoadBalancer-specific settings can be removed or left empty
+    ##
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    externalTrafficPolicy: Cluster
+    annotations: {}
+    extraPorts: []
+    sessionAffinity: None
+    sessionAffinityConfig: {}
+
+  management:
+    type: ClusterIP
+    ports:
+      http: 9000
+    nodePorts:
+      http: ""
+    clusterIP: ""
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    externalTrafficPolicy: Cluster
+    annotations: {}
+    extraPorts: []
+    sessionAffinity: None
+    sessionAffinityConfig: {}
+
+## Ingress configuration (optional)
+
+postgresql:
+  enabled: true
+  auth:
+    username: bn_nessie
+    password: "Pa22word22"
+    database: bitnami_nessie
+    existingSecret: ""
+  architecture: standalone
+  primary:
+    service:
+      ports:
+        postgresql: 5432
