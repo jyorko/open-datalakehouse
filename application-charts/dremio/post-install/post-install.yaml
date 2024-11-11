@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -23,18 +24,17 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              apk add --no-cache curl sed jq && \
+              apk add --no-cache curl sed && \
               sleep 60s && \
-              # Authenticate as admin
               response=$(curl -s -X POST "http://dremio:9047/apiv2/login" \
                 --header "Content-Type: application/json" \
                 --data-raw "{
-                  \"userName\": \"admin\",
-                  \"password\": \"Pa22word\"
+                \"userName\": \"admin\",
+                \"password\": \"Pa22word\"
                 }") && \
+              echo $response && \
               token=$(echo "$response" | sed -n 's/.*\"token\":\"\([^\"]*\)\".*/\1/p') && \
-              echo "Admin token: $token" && \
-
+              echo $token && \
               # Add Nessie catalog source
               response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
                 --header "Authorization: Bearer $token" \
@@ -61,8 +61,7 @@ spec:
                     \"name\": \"nessie-1\",
                     \"type\": \"NESSIE\"
                 }") && \
-              echo "Nessie Source Response: $response" && \
-
+              echo $response && \
               # Add S3-compatible storage source (MinIO)
               response=$(curl -X POST "http://dremio:9047/api/v3/source" \
                 --header "Authorization: Bearer $token" \
@@ -83,87 +82,16 @@ spec:
                         ]
                     }
                 }") && \
-              echo "MinIO Source Response: $response" && \
-
-              # Create Power BI space
-              response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
-                  --header "Authorization: Bearer $token" \
-                  --header "Content-Type: application/json" \
-                  --data-raw "{
-                      \"entityType\": \"space\",
-                      \"name\": \"Power BI\"
-                  }") && \
-              echo "Power BI Space Response: $response" && \
-
-              # Define users to be created
-              users='[
-                {
-                  "name": "mbeltran",
-                  "firstName": "Marcos",
-                  "lastName": "Yepes-Beltran",
-                  "email": "marcos.yepesbeltran@gainwelltechnologies.com",
-                  "roles": [
-                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
-                  ]
-                },
-                {
-                  "name": "jcav",
-                  "firstName": "Justin",
-                  "lastName": "Cavanaugh",
-                  "email": "justin.cavanaugh@gainwelltechnologies.com",
-                  "roles": [
-                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
-                  ]
-                },
-                {
-                  "name": "jsanders",
-                  "firstName": "Jennifer",
-                  "lastName": "Sanders",
-                  "email": "jennifer.sanders@gainwelltechnologies.com",
-                  "roles": [
-                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
-                  ]
-                },
-                {
-                  "name": "kmelton",
-                  "firstName": "Kaelyn",
-                  "lastName": "Melton",
-                  "email": "kaelyn.dobbins@gainwelltechnologies.com",
-                  "roles": [
-                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
-                  ]
-                },
-                {
-                  "name": "tgriggs",
-                  "firstName": "Tyler",
-                  "lastName": "Griggs",
-                  "email": "tyler.griggs@gainwelltechnologies.com",
-                  "roles": [
-                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
-                  ]
-                },
-                {
-                  "name": "jyorko",
-                  "firstName": "Josh",
-                  "lastName": "Yorko",
-                  "email": "joshua.yorko@gainwelltechnologies.com",
-                  "roles": [
-                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
-                  ]
-                }
-              ]' && \
-              
-              # Loop to create each user with specified roles
-              echo "$users" | jq -c '.[]' | while read user; do
-                response=$(curl -s -X POST "http://dremio:9047/api/v3/user" \
-                  --header "Authorization: Bearer $token" \
-                  --header "Content-Type: application/json" \
-                  --data-raw "$user") && \
-                if echo "$response" | grep -q '"errorMessage"'; then
-                  echo "Failed to create user: $(echo "$user" | jq -r '.name')";
-                  echo "Error: $(echo "$response" | jq -r '.errorMessage')";
-                else
-                  echo "Successfully created user: $(echo "$user" | jq -r '.name')";
-                fi;
-              done
-      restartPolicy: OnFailure
+                        echo $response && \
+                        # Create Bronze, Silver, Gold, and nessie_views spaces
+                        for space in "Power BI" "nessie_views"; do \
+                        response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
+                          --header "Authorization: Bearer $token" \
+                          --header "Content-Type: application/json" \
+                          --data-raw "{
+                            \"entityType\": \"space\",
+                            \"name\": \"$space\"
+                          }") && \
+                        echo $response; \
+                        done
+                    restartPolicy: OnFailure
