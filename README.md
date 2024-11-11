@@ -1,7 +1,7 @@
 ---
 
 title: Open Datalakehouse - Bootstrapping a Datalakehouse on Kubernetes  
-author: Joshua Yorko, [@joshyorko](https://github.com/joshyorko), joshua.yorko@gmail.com  
+author: Joshua Yorko, [@jyorko](https://github.com/jyorko), joshua.yorko@gmail.com  
 ---
 
 # Open Datalakehouse - Bootstrapping a Datalakehouse on Kubernetes
@@ -16,7 +16,7 @@ author: Joshua Yorko, [@joshyorko](https://github.com/joshyorko), joshua.yorko@g
 
 Just a really big nerd who likes Distributed Systems and bootstrapping stuff
 
-Josh Yorko - [@joshyorko](https://github.com/joshyorko) - joshua.yorko@gmail.com
+Josh Yorko - [@jyorko](https://github.com/jyorko) - joshua.yorko@gmail.com
 
 ## Goal
 
@@ -47,21 +47,21 @@ TLDR;
 ```bash
 ## For Minikube:
 
-curl -sSL https://raw.githubusercontent.com/joshyorko/open-datalakehouse/main/setup_datalkehouse.sh | bash -s -- --platform minikube
+curl -sSL https://raw.githubusercontent.com/jyorko/open-datalakehouse/main/setup_datalkehouse.sh | bash -s -- --platform minikube
 
 ## For K3s:
 
-curl -sSL https://raw.githubusercontent.com/joshyorko/open-datalakehouse/main/setup_datalkehouse.sh | bash -s -- --platform k3s
+curl -sSL https://raw.githubusercontent.com/jyorko/open-datalakehouse/main/setup_datalkehouse.sh | bash -s -- --platform k3s
 
 ## For the Current Kubernetes Context:
 
-curl -sSL https://raw.githubusercontent.com/joshyorko/open-datalakehouse/main/setup_datalkehouse.sh | bash -s -- --platform current 
+curl -sSL https://raw.githubusercontent.com/jyorko/open-datalakehouse/main/setup_datalkehouse.sh | bash -s -- --platform current 
 ```
 
 or Assuming you have a cluster already setup
 
 ```bash
-git clone https://github.com/joshyorko/open-datalakehouse.git
+git clone https://github.com/jyorko/open-datalakehouse.git
 cd open-datalakehouse
 kubectl create ns argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
