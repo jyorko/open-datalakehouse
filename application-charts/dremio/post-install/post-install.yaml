@@ -34,7 +34,7 @@ spec:
                 }") && \
               token=$(echo "$response" | sed -n 's/.*\"token\":\"\([^\"]*\)\".*/\1/p') && \
               echo "Admin token: $token" && \
-              
+
               # Add Nessie catalog source
               response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
                 --header "Authorization: Bearer $token" \
@@ -102,46 +102,58 @@ spec:
                   "firstName": "Marcos",
                   "lastName": "Yepes-Beltran",
                   "email": "marcos.yepesbeltran@gainwelltechnologies.com",
-                  "password": "~\\-w0+719C0do"
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "jcav",
                   "firstName": "Justin",
                   "lastName": "Cavanaugh",
                   "email": "justin.cavanaugh@gainwelltechnologies.com",
-                  "password": "marcos_lovesM7!!"
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "jsanders",
                   "firstName": "Jennifer",
                   "lastName": "Sanders",
                   "email": "jennifer.sanders@gainwelltechnologies.com",
-                  "password": "Pa22word22!"
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "kmelton",
                   "firstName": "Kaelyn",
                   "lastName": "Melton",
                   "email": "kaelyn.dobbins@gainwelltechnologies.com",
-                  "password": "Pa22word"
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "tgriggs",
                   "firstName": "Tyler",
                   "lastName": "Griggs",
                   "email": "tyler.griggs@gainwelltechnologies.com",
-                  "password": "Pa22word22!"
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 },
                 {
                   "name": "jyorko",
                   "firstName": "Josh",
                   "lastName": "Yorko",
                   "email": "joshua.yorko@gainwelltechnologies.com",
-                  "password": "Pa22word22!"
+                  "roles": [
+                    {"id": "8ac1bbca-479c-4c47-87e9-7f946f665c13", "name": "PUBLIC", "type": "SYSTEM"}
+                  ]
                 }
               ]' && \
               
-              # Loop to create each user
+              # Loop to create each user with specified roles
               echo "$users" | jq -c '.[]' | while read user; do
                 response=$(curl -s -X POST "http://dremio:9047/api/v3/user" \
                   --header "Authorization: Bearer $token" \
