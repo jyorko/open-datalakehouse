@@ -82,16 +82,16 @@ spec:
                         ]
                     }
                 }") && \
-                        echo $response && \
-                        # Create Bronze, Silver, Gold, and nessie_views spaces
-                        for space in "Power BI" "nessie_views"; do \
-                        response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
-                          --header "Authorization: Bearer $token" \
-                          --header "Content-Type: application/json" \
-                          --data-raw "{
-                            \"entityType\": \"space\",
-                            \"name\": \"$space\"
-                          }") && \
-                        echo $response; \
-                        done
-                    restartPolicy: OnFailure
+              echo $response && \
+              # Create Bronze, Silver, and Gold spaces
+              for space in "Power BI" "nessie_views"; do \
+                response=$(curl -X POST "http://dremio:9047/api/v3/catalog" \
+                  --header "Authorization: Bearer $token" \
+                  --header "Content-Type: application/json" \
+                  --data-raw "{
+                      \"entityType\": \"space\",
+                      \"name\": \"$space\"
+                  }") && \
+                echo $response; \
+              done
+      restartPolicy: OnFailure
