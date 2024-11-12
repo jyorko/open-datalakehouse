@@ -17,7 +17,7 @@ spec:
     apiVersion: apps/v1
     kind: StatefulSet
     name: dremio-executor-default
-  minReplicas: 5
+  minReplicas: 15
   maxReplicas: 45
   metrics:
     - type: Resource
