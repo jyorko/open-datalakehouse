@@ -38,11 +38,11 @@ coordinator:
           name: dremio-keystore-password
           key: password
 
-
-
 executor:
   common:
-
+    persistence:
+      size: 8Gi
+      storageClass: "gp2-expandable"
     extraStartParams: >-
       -Xmx12g                         # Adjusted JVM heap size to match the new memory request
       -XX:MaxDirectMemorySize=8g      # Adjusted to match the reduced memory limits
@@ -60,7 +60,6 @@ executor:
           secretKeyRef:
             name: dremio-keystore-password
             key: password
-
     autoscaling:
       hpa:
         enabled: true                       # Enable HPA for the executor
