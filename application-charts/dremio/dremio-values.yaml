@@ -38,6 +38,8 @@ coordinator:
           name: dremio-keystore-password
           key: password
 
+
+
 executor:
   common:
     persistence:
@@ -60,6 +62,14 @@ executor:
           secretKeyRef:
             name: dremio-keystore-password
             key: password
+    resourcesPreset: "xlarge"
+    resources:
+      requests:
+        cpu: 4
+        memory: 16Gi
+      limits:
+        cpu: 6
+        memory: 24Gi
     #autoscaling:
     #  hpa:
     #    enabled: true                       # Enable HPA for the executor
