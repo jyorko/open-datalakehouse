@@ -55,7 +55,8 @@ RUN echo 'PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin' >> ~/.bashrc
 RUN echo 'PYSPARK_PYTHON=/usr/bin/python3' >> ~/.bashrc
 RUN . ~/.bashrc
 ## Install PySpark
-RUN pip3 install jupyterlab notebook pyspark pandas sqlalchemy tqdm pyarrow
+COPY --chown=user:group ./requirements.txt /home/docker/requirements.txt
+RUN pip3 install -r requirements.txt
 
 
 EXPOSE 8888

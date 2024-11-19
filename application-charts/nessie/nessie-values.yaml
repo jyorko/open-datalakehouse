@@ -3,7 +3,7 @@ global:
 
   storageClass: "gp2-expandable"
 
-replicaCount: 3
+replicaCount: 1
 
 service:
   server:
